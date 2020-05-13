@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block header %}
+<script>
+    function send_message(input) {
+        var group = "{{ group }}";
+
+        var Socket = new WebSocket(
+            'ws://${window.location.host}/ws/stream/${group}/'
+        );
+
+        Socket.onmessage(e){
+            var data = JSON.parse(e.data);
+            var message = data['group'];
+            document.querySelector('#group-name').value += (message + '\n');
+        };
+
+        Socket.onclose(e){
+            console.error('Socket closed unexpectedly');
+        };
+
+        document.querySelector('#group-input').focus();
+        document.querySelector('#group-submit').addEventListener("keyup", function (e) {
+            if (e.keycode == 13) {
+                document.querySelector('#group-submit').click();
+            }
+        });
+
+        document.querySelector('#group-submit').addEventListener('click', function (e) {
+            var messageInputDom = document.querySelector('#group-input');
+            var message = messageInputDom.value;
+            Socket.send(JSON.stringify({
+                'message': message
+            }));
+
+            messageInputDom.value = '';
+        });
+    }
+    $(document).ready(function () {
+    })
+</script>
+{% endblock %}
+{% block contents %}
+<textarea id="group-name" cols="100" rows="20"></textarea>
+<input id="group-input" type="text" size="100" /><br />
+<input id="group-submit" type="button" value="Enter"><br />
+{% endblock %}
