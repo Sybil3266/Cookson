@@ -17,9 +17,13 @@ from django.conf.urls import include
 from django.urls import path
 from django.contrib import admin
 from User.views import index
+from Recipe.views import RecipeListView
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('Stream/', include('Stream.urls')),
     path('user/', include('User.urls')),
     path('admin/', admin.site.urls),
-    path('', index),
-]
+    path('receipe/', RecipeListView.as_view(), name='recipe-list'),
+    path('', index), 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

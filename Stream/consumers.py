@@ -3,6 +3,7 @@ import json
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from channels.layers import get_channel_layer
+
 class StreamUser(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
@@ -30,7 +31,9 @@ class StreamUser(AsyncWebsocketConsumer):
 
         # Send message to room group
         await self.channel_layer.group_send(
-            self.room_group_name,
+            self.
+            
+            room_group_name,
             {
                 'type': 'chat_message',
                 'message': message
@@ -40,8 +43,9 @@ class StreamUser(AsyncWebsocketConsumer):
     # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
-
+        print(message)
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message
         }))
+

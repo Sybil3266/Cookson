@@ -26,10 +26,10 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(username, 'register.html',  password, **extra_fields)
+        return self._create_user(username, password, **extra_fields)
 
 
-class User(models.Model): 
+class User(AbstractUser): 
     username = models.CharField(verbose_name='아이디', unique=True, max_length=20)
     password = models.CharField(verbose_name='비밀번호', max_length=128)
 
@@ -38,8 +38,8 @@ class User(models.Model):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
-    is_anonymous = None
-    is_authenticated = None
+    # is_anonymous = None
+    # is_authenticated = None
     def __str__(self):
         return self.username
 
