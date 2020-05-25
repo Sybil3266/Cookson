@@ -128,7 +128,8 @@ venv.bak/
 .dmypy.json
 dmypy.json
 secrets.json
-
+db.sqlite3
+media
 # Pyre type checker
 .pyre/
 
@@ -136,8 +137,4 @@ secrets.json
 .pytype/
 
 # Cython debug symbols
-<<<<<<< Updated upstream
 cython_debug/
-=======
-cython_debug/
->>>>>>> Stashed changes
