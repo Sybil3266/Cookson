@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block contents %}
+
+<div class="container">
+    {%if not user%}
+    <p class="">You have to Login to use Cookson Services!</p>
+    <button type="button" class="btn btn-primary" onclick="location.href='/user/login'">Sign in</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/user/register'">Sign up</button>
+    {% else %}
+    <p>Hello {{user}}!</p>
+    <button type="button" class="btn btn-primary" onclick="location.href='/recipe'">Recipe</button>
+    {% endif %}
+</div>
+{% endblock %}
