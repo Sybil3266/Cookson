@@ -65,7 +65,10 @@
     <button type="button" class="btn btn-primary" onclick="location.href='/user/register'">Sign up</button>
     {% else %}
     <div class="container">
-    {% for recipe in object_list %}
+        <div class="container">
+            you are {{user}}
+        </div>
+        {% for recipe in object_list %}
         <div id="recipe_modal_{{recipe.name}}" class="recipe_modal">
             <br><span class="close">&times;</span>
             <div class="modal-content text-center">    

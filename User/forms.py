@@ -49,4 +49,4 @@ class LoginForm(forms.Form):
             return
         
         if not check_password(password, user.password):
-            self.add_error('password', '비밀번호')
+            self.add_error('password', '비밀번호 오류!')

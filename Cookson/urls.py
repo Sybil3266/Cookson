@@ -24,6 +24,6 @@ urlpatterns = [
     path('Stream/', include('Stream.urls')),
     path('user/', include('User.urls')),
     path('admin/', admin.site.urls),
-    path('receipe/', RecipeListView.as_view(), name='recipe-list'),
+    path('recipe/', RecipeListView.as_view(), name='recipe-list'),
     path('', index), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
