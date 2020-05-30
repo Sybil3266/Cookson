@@ -6,5 +6,5 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
     path('logout/', Logout),
-    path('stream/', stream)
+    path('<str:room_name>/', stream, name='room'),
 ]

@@ -1,0 +1,2 @@
+model_checkpoint_path: "uphrcnn12cp"
+all_model_checkpoint_paths: "uphrcnn12cp"
