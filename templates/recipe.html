@@ -51,33 +51,25 @@
         $('.close').click(function(){
             $('.recipe_modal').hide();
         });
-
-        //$('#StartCookson').click(function(){
-        //    var roomName = "<%HttpContext.Current.User.Identity.Name %>";
-        //    window.location.pathname = '/user/' + {{user.username}} + '/';
-        //});
-        
-    });
-
 </script>
 {% endblock %}
 
 {% block contents %}
 
 <div class="container">
-    {%if not user%}
+    {%if user.is_anonymous%}
     <p>You have to Login to use Cookson Services!</p>
     <button type="button" class="btn btn-primary" onclick="location.href='/user/login'">Sign in</button>
     <button type="button" class="btn btn-primary" onclick="location.href='/user/register'">Sign up</button>
     {% else %}
     <div class="container">
-    {% for recipe in object_list %}
+        {% for recipe in object_list %}
         <div id="recipe_modal_{{recipe.name}}" class="recipe_modal">
             <br><span class="close">&times;</span>
             <div class="modal-content text-center">    
                 <h4>{{recipe.name}} 제조법</h4>
                 <p>{{recipe.recipe | linebreaks}}</p>
-                <button type="button" class="btn btn-primary" id="StartCookson" onclick="location.href='/user/ram'">Start Cookson!</button>
+                <button type="button"class="btn btn-primary" onclick="location.href='/user/{{user}}'">Start Cookson!</button>
             </div>
         </div>
         <script>
