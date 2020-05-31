@@ -1,5 +1,11 @@
-from django.db import models
 from django.contrib.auth.models  import AbstractUser, BaseUserManager
+from functools import partial
+from django.conf import settings
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.urls import reverse
+from django.utils.crypto import get_random_string
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -47,3 +53,4 @@ class User(AbstractUser):
         db_table = "Cookson_user"
         verbose_name = "User"
         verbose_name_plural = "User"
+

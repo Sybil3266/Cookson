@@ -29,6 +29,16 @@ class RegisterForm(forms.Form):
             if password != check_password:
                 self.add_error('password', '비밀번호가 일치하지 않습니다!')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+        check_password = cleaned_data.get('check_password')
+
+        if password and check_password:
+            if password != check_password:
+                self.add_error('password', '비밀번호가 일치하지 않습니다!')
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='username')
@@ -47,6 +57,6 @@ class LoginForm(forms.Form):
         except (NameError, ObjectDoesNotExist):
             self.add_error('username', '아이디가 잘못된것 같아요!')
             return
-        
+
         if not check_password(password, user.password):
             self.add_error('password', '비밀번호 오류!')
