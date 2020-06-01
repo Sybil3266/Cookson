@@ -130,8 +130,9 @@ dmypy.json
 secrets.json
 django.cert
 django.key
-
 stunnel/
+runserver
+
 # Pyre type checker
 .pyre/
 
