@@ -1,3 +1,0 @@
-stunnel stunnel/dev_https &
-python /home/hayato7177/Cookson/manage.py runserver &
-HTTPS=1 python /home/hayato7177/Cookson/manage.py runserver 8001
