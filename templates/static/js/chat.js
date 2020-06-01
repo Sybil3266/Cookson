@@ -1,5 +1,4 @@
 'use strict';
-{{ room_name|json_script:"room-name" }}
 // var roomName = {{ room_name_json }};
 var roomName = JSON.parse(document.getElementById('room-name').textContent);
 var ws = 'ws://';

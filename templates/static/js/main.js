@@ -198,11 +198,11 @@ hangupButton.addEventListener('click', hangupAction);
 
 // Handles start button action: creates local MediaStream.
 function startAction() {
-  //startButton.disabled = false;
+  startButton.disabled = false;
   //localVideo.srcObject = navigator.mediaDevices.getUserMedia(mediaStreamConstraints);
   //localStream = localVideo.srcObject;
   //trace('Received local stream.');
-  callButton.disable = false;
+  callButton.disabled = false;
   //trace('Requesting local stream.');
 }
 

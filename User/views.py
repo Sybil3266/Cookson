@@ -10,6 +10,7 @@ from asgiref.sync import async_to_sync
 import cv2
 import numpy
 from .__init__ import cnn, labQ, prelabel
+import threading
 # Create your views here.
 
 
@@ -56,24 +57,27 @@ def show_mess(label):
     elif label == 9 :
         return '이제 약 10초간 더끓이신뒤 맛있는 라면을 드시면됩니다.'
 
-def stream(request, room_name):
 
+def stream(request, room_name):
+    print("plz do it")
     if request.method == "POST":
         print("wah")
-        profile = request.FILES["profile"].read()
-        img = cv2.imdecode(numpy.fromstring(profile, numpy.uint8), cv2.IMREAD_UNCHANGED)
-        #ret, jpeg = cv2.imencode('.jpg', img)
+        reqimg = request.FILES["profile"].read()
+        img = cv2.imdecode(numpy.fromstring(reqimg, numpy.uint8), cv2.IMREAD_UNCHANGED)
+        # ret, jpeg = cv2.imencode('.jpg', img)
 
         npimg = numpy.asarray([makeimg(img)])
         predic = cnn.predict_on_batch(npimg)
         predic = numpy.argmax(predic, axis=1)
         labQ.extend(predic)
         if labQ.count((prelabel[0]) + 1) > 0:
+            print(predic)
             prelabel.popleft()
             next_movement = show_mess(prelabel[0])
             send_channel_message('chat_%s' % room_name, next_movement)
 
         cv2.imwrite(room_name + '.jpg', img)
+    print("and doing it")
 
     return render(request, 'room.html', {'room_name': room_name})
 

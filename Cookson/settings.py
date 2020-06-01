@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import json
-from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,33 +20,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
-
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "Set the {0} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
-
-
-SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = '@un0c*u)9#_&o5f)uj^@q@my*djsp1jo=-()=1ew*7o!lx%&3a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [('10.0.2.2'), ('127.0.0.1'), ('192.168.0.22')]
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'channels',
     'User',
-    'Stream',
     'Recipe',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -143,7 +127,10 @@ AUTH_USER_MODEL = 'User.User'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ( os.path.join('static'), )
 ASGI_APPLICATION = 'routing.application'
 CHANNEL_LAYERS = {
     'default': {
