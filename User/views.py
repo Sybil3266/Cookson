@@ -68,7 +68,7 @@ def stream(request, room_name):
         predic = cnn.predict_on_batch(npimg)
         predic = numpy.argmax(predic, axis=1)
         labQ.extend(predic)
-        if labQ.count((prelabel[0]) + 1) > 1:
+        if labQ.count((prelabel[0]) + 1) > 2:
             prelabel.popleft()
             next_movement = show_mess(prelabel[0])
             send_channel_message('chat_%s' % room_name, next_movement)
