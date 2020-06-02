@@ -146,15 +146,17 @@ MEDIA_URL = '/media/'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+AUTO_LOGOUT_DELAY = 1
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
 ASGI_APPLICATION = 'routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('34.64.221.157', 6379)],
+            "hosts": [('127.0.0.1', 6379)],
         },
     },
 }
