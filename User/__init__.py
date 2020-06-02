@@ -7,4 +7,5 @@ cnn.compile(optimizer='adam',
             metrics=['accuracy'])
 cnn.load_weights('cnnmodel/uphrcnn12cp')
 labQ = deque(maxlen=5)
-prelabel = deque([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+originlabel = deque([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+prelabel = originlabel.copy()

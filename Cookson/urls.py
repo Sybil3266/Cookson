@@ -21,7 +21,6 @@ from Recipe.views import RecipeListView
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
-    path('Stream/', include('Stream.urls')),
     path('user/', include('User.urls')),
     path('admin/', admin.site.urls),
     path('recipe/', RecipeListView.as_view(), name='recipe-list'),

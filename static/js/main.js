@@ -10,12 +10,12 @@ const videoSelect = document.querySelector('select#videoSource');
 const selectors = [videoSelect];
 
 const canvas = window.canvas = document.querySelector('canvas');
-canvas.width = 480;
-canvas.height = 360;
-//canvas.style.display="none"
+canvas.width = 1280;
+canvas.height = 720;
+canvas.style.display="none"
 
-const width = 1920;
-const height = 1080;
+const width = 1280;
+const height = 720;
 var stopRepeating = false;
 
 
@@ -34,9 +34,11 @@ let startTime = null;
 // Define peer connections, streams and video elements.
 const localVideo = document.getElementById('localVideo');
 const remoteVideo = document.getElementById('remoteVideo');
+const demoVideo = document.getElementById('hidedemoVideo');
+demoVideo.style.display="none";
 
-let localStream;
-let remoteStream;
+let localStream = new MediaStream();
+let remoteStream = new MediaStream();
 
 let localPeerConnection;
 let remotePeerConnection;
@@ -112,8 +114,8 @@ function logResizedVideo(event) {
 }
 
 localVideo.addEventListener('loadedmetadata', logVideoLoaded);
-remoteVideo.addEventListener('loadedmetadata', logVideoLoaded);
-remoteVideo.addEventListener('onresize', logResizedVideo);
+//remoteVideo.addEventListener('loadedmetadata', logVideoLoaded);
+//remoteVideo.addEventListener('onresize', logResizedVideo);
 
 
 // Define RTC peer connection behavior.
@@ -227,21 +229,45 @@ const callButton = document.getElementById('callButton');
 const hangupButton = document.getElementById('hangupButton');
 
 // Set up initial action buttons status: disable call and hangup.
-callButton.disabled = true;
+callButton.disabled = false;
 hangupButton.disabled = true;
 
 // Add click event handlers for buttons.
-startButton.addEventListener('click', callAction);
+startButton.addEventListener('click', DemoAction);
 callButton.addEventListener('click', call2Action);
 hangupButton.addEventListener('click', hangupAction);
 
-videoSelect.addEventListener('change', startAction);
+videoSelect.addEventListener('change', SelectAction);
 
 navigator.mediaDevices.getUserMedia(mediaStreamConstraintsDemo)
     .then(gotLocalMediaStream).then(gotDevices).catch(handleLocalMediaStreamError);
 
+
+function DemoAction() {
+    demoVideo.play();
+    let stream;
+    const fps = 0;
+    if (demoVideo.captureStream) {
+        stream = demoVideo.captureStream(fps);
+    }
+    else if (demoVideo.mozCaptureStream) {
+        stream = demoVideo.mozCaptureStream(fps);
+    }
+    else {
+        console.error('Stream capture is not supported');
+        stream = null;
+    }
+    localVideo.srcObject = stream;
+    demoVideo.muted = "muted";
+    localVideo.muted = "muted";
+
+}
+
 // Handles start button action: creates local MediaStream.
-function startAction() {
+function SelectAction() {
+  localStream.disabled = false;
+  demoVideo.muted = "muted";
+  localVideo.muted = "muted";
   const videoSource = videoSelect.value;
   const mediaStreamConstraints = { video: {deviceId: videoSource ? {exact: videoSource} : undefined} };
   navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
@@ -296,6 +322,8 @@ function callAction() {
 }
 
 function call2Action(){
+    callButton.disabled = true;
+    hangupButton.disabled = false;
     stopRepeating = false;
     repeatingCap();
 }
@@ -305,7 +333,7 @@ function repeatingCap() {
         return
     }
     takePicture();
-    setTimeout(repeatingCap, 3000);
+    setTimeout(repeatingCap, 1000);
 }
 
 function takePicture() {
@@ -340,7 +368,10 @@ function takePicture() {
 
 // Handles hangup action: ends up call, closes connections and resets peers.
 function hangupAction() {
+  callButton.disabled = false;
+  hangupButton.disabled = true;
   stopRepeating = true;
+  demoVideo.pause();
   localPeerConnection.close();
   remotePeerConnection.close();
   localPeerConnection = null;

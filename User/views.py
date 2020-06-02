@@ -59,9 +59,7 @@ def show_mess(label):
 
 
 def stream(request, room_name):
-    print("plz do it")
     if request.method == "POST":
-        print("wah")
         reqimg = request.FILES["profile"].read()
         img = cv2.imdecode(numpy.fromstring(reqimg, numpy.uint8), cv2.IMREAD_UNCHANGED)
         # ret, jpeg = cv2.imencode('.jpg', img)
@@ -70,14 +68,10 @@ def stream(request, room_name):
         predic = cnn.predict_on_batch(npimg)
         predic = numpy.argmax(predic, axis=1)
         labQ.extend(predic)
-        if labQ.count((prelabel[0]) + 1) > 0:
-            print(predic)
+        if labQ.count((prelabel[0]) + 1) > 1:
             prelabel.popleft()
             next_movement = show_mess(prelabel[0])
             send_channel_message('chat_%s' % room_name, next_movement)
-
-        cv2.imwrite(room_name + '.jpg', img)
-    print("and doing it")
 
     return render(request, 'room.html', {'room_name': room_name})
 
