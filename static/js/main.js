@@ -13,6 +13,10 @@ const canvas = window.canvas = document.querySelector('canvas');
 canvas.width = 1280;
 canvas.height = 720;
 canvas.style.display="none"
+const sendbutton = document.getElementById('chat-message-submit');
+const sendtextarea = document.getElementById('chat-message-input');
+sendbutton.style.display="none"
+sendtextarea.style.display="none"
 
 const width = 1280;
 const height = 720;
@@ -33,7 +37,7 @@ let startTime = null;
 
 // Define peer connections, streams and video elements.
 const localVideo = document.getElementById('localVideo');
-const remoteVideo = document.getElementById('remoteVideo');
+//const remoteVideo = document.getElementById('remoteVideo');
 const demoVideo = document.getElementById('hidedemoVideo');
 demoVideo.style.display="none";
 
@@ -257,6 +261,11 @@ function DemoAction() {
         console.error('Stream capture is not supported');
         stream = null;
     }
+    if (localStream) {
+    localStream.getTracks().forEach(track => {
+      track.stop();
+      });
+    }
     localVideo.srcObject = stream;
     demoVideo.muted = "muted";
     localVideo.muted = "muted";
@@ -265,6 +274,11 @@ function DemoAction() {
 
 // Handles start button action: creates local MediaStream.
 function SelectAction() {
+  if (localStream) {
+    localStream.getTracks().forEach(track => {
+      track.stop();
+    });
+  }
   localStream.disabled = false;
   demoVideo.muted = "muted";
   localVideo.muted = "muted";
