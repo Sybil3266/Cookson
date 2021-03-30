@@ -17,7 +17,7 @@ click==7.1.2
 constantly==15.1.0
 cryptography==2.9.2
 daphne==2.5.0
-Django==3.0.7
+Django==3.0.12
 django-sslserver==0.22
 gast==0.2.2
 google-auth==1.14.1
