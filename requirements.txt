@@ -61,7 +61,7 @@ tensorboard==2.1.1
 tensorflow==2.1.0
 tensorflow-estimator==2.1.0
 termcolor==1.1.0
-Twisted==20.3.0
+Twisted==22.1.0
 txaio==20.4.1
 urllib3==1.25.9
 uvicorn==0.11.5
